@@ -96,7 +96,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -107,5 +107,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-
+SOCIAL_AUTH_DRCHRONO_KEY = 'QrIv5UIfnXaZdA0uZOoNKJPoOSpOvepShkiCOVRQ'
+SOCIAL_AUTH_DRCHRONO_SECRET = '0PlBVkG2NqU1IFUl7EC0Bcpwee4lxTYNca7t3em4X7YmabRRaktXjYDbWKID93n8ADlbB2Wj51JoCA3eBQGh7DXaqHNlqMDAZ39m3JFszI2uOLToDmI8zkxyT2ikod8h'
+#SOCIAL_AUTH_DRCHRONO_SCOPE = ['patients:summary:read patients:read']
+LOGIN_REDIRECT_URL = '/'
 STATIC_URL = '/static/'
