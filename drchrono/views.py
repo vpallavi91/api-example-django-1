@@ -23,19 +23,25 @@ def login(request):
         user_name = str(instance)
         request.session['access_token'] = instance.extra_data['access_token']
         data = data_from_url(request,'https://drchrono.com/api/users')
+        # test = data_from_url(request,'https://drchrono.com/api/patients?first_name=soundarya')
+        # print(test)
         for da in data:
             if da['username'] == user_name:
                 if da['is_doctor'] == False:
                     check = login_as_staff(da['doctor'])
                     if check == True:
-                        return render_to_response('patient.html')
+                        return redirect(reverse('kiosk:home'))
                     else:
                         return logout_app(request)
                 else:
                     login_as_doc(request,da['doctor'])
-                    return render_to_response('doctor.html')
+                    return redirect(reverse('doctor:home'))
         return render_to_response('index.html')
 
 def logout_app(request):
     logout(request)
     return redirect(reverse("login"))
+
+def test(request):
+    data = data_from_url(request,'https://drchrono.com/api/patients?first_name=soundarya')
+    print(data)

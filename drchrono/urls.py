@@ -9,8 +9,9 @@ urlpatterns = [
     #url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.login,name = 'login'),
-    url(r'^patients/', include('patients.urls'),name = 'doctor'),
-    url(r'^doctor/', include('doctor.urls'),name = 'doctor'),
+    url(r'^test/$', views.login,name = 'login'),
+    url(r'^kiosk/', include('kiosk.urls',namespace = 'kiosk')),
+    url(r'^doctor/', include('doctor.urls',namespace='doctor')),
     url(r'^logout/$', views.logout_app,name = 'logout'),
     url(r'', include('social.apps.django_app.urls', namespace='social')),
 ]
