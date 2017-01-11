@@ -1,10 +1,11 @@
 {% load static %}
 <html ng-app='kiosk'>
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'css/kiosk/kiosk.css' %}" />
 </head>
 <body ng-controller = 'kioskCtrl'>
-  <form id="msform" ng-submit=''>
+  <form id="msform" name = 'checkinform'>
   		<!-- progressbar -->
   		<ul id="progressbar">
   			<li class="active">Check-in Details</li>
@@ -15,20 +16,28 @@
   		<fieldset>
   			<h2 class="fs-title">Confirm Identity</h2>
   			<h3 class="fs-subtitle">Please provide your basic info to check-in</h3>
-  			<input type="text" name="fname" placeholder="First Name" ng-model="first_name"/>
-  			<input type="text" name="lname" placeholder="Last Name" ng-model="last_name"/>
-  			<input type="date" name = "dob" placeholder="Date Of Birth" max="2016-12-31" ng-model="dob">
-        <input type="button" value="Retrieve" class = "action-button" ng-click="pat()"/>
-  			<input type="button" name="next" class="next action-button" value="Next" />
+  			<input type="text" name="fname" placeholder="First Name" ng-model="first_name" required/>
+  			<input type="text" name="lname" placeholder="Last Name" ng-model="last_name" required/>
+  			<input type="date" name = "dob" placeholder="Date Of Birth" max="2016-12-31" ng-model="dob" required/>
+        <i ng-show='paterr' style='color:red'>The given details do not match any patient</i></br>
+        <i ng-show='validationerror' style='color:red'>Please provide all details</i></br>
+        <input type="button" ng-hide="patientDataWaiting" value="Retrieve" class = "action-button" ng-click="pat()"/>
+        <i class="fa fa-spinner fa-spin" ng-show="patientDataWaiting && !patientData" style="font-size:24px"></i>
+  			<input type="button" name="next" ng-show="patientData" class="next action-button" value="Next" ng-click="reset()"/>
   		</fieldset>
   		<fieldset>
   			<h2 class="fs-title">Confirm Appointment</h2>
   			<h3 class="fs-subtitle">Is the one given below your scheduled appointment?</h3>
-  			<input type="text" name="twitter" placeholder="Twitter" />
-  			<input type="text" name="facebook" placeholder="Facebook" />
-  			<input type="text" name="gplus" placeholder="Google Plus" />
+        {% verbatim %}
+          <div class="appConfirm">
+            <ul>
+              <li>Time: {{ time }}</li>
+              <li>Duration: {{ duration }} minutes</li>
+            </ul>
+          </div>
+        {% endverbatim %}
   			<input type="button" name="previous" class="previous action-button" value="Previous" />
-  			<input type="button" name="next" class="next action-button" value="Next" />
+  			<input type="button" name="next" class="next action-button" value="Next" ng-click="setAppointmenttoArrived()"/>
   		</fieldset>
   		<fieldset>
   			<h2 class="fs-title">Personal Details</h2>

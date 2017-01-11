@@ -140,3 +140,9 @@ input[type="date"]:before {
   input[type="date"]:valid:before {
     content: "";
   }
+
+.appConfirm{
+  vertical-align: middle;
+  padding-top: 4em;
+  padding-bottom: 4em;
+}

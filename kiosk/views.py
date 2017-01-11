@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import requests
 from django.views.generic import View
-from drchrono.utils import data_from_url
-
+from drchrono.utils import data_from_url, patch_appointment
+from datetime import datetime
 # Create your views here.
 def home(request):
     return render(request,'kiosk.html')
@@ -17,7 +17,7 @@ class PatientView(View):
     def get(self, request):
         """ Query drchrono /patients endpoint and return JSON of patient info """
 
-        if (request.GET.has_key("f_name")):
+        if (request.GET.has_key("f_name") and request.GET.has_key("l_name") and request.GET.has_key("dob")):
             filter = {
                     'first_name' : request.GET.get('f_name'),
                     'last_name' : request.GET.get('l_name'),
@@ -29,53 +29,37 @@ class PatientView(View):
         else:
             return JsonResponse({"status": "false"}, status=500)
 
-    # def post(self, request):
-    #     """
-    #         Responds to POST request to /doctor/patient endpoint by sending
-    #         PATCH request to /patients/ update to update patient info.
-    #     """
-    #
-    #     if (request.POST.has_key("patient_id")):
-    #         status_code = patch_patient(request)
-    #         return JsonResponse({"response": status_code})
-    #     else:
-    #         return JsonResponse({"status": "false"}, status=500)
-
-
-class AppointmentView(View):
-    """
-        Handles GET and POST requests to our /doctor/appointment/ endpoint and
-        responds by sending GET or PATCH request to drchrono /appointment
-    """
-
-    def get(self, request):
+    def post(self, request):
         """
-            Send GET request to drchrono /appointments endpoint and return
-            JSON of arrays of appointments filtered by name.
+            Responds to POST request to /doctor/patient endpoint by sending
+            PATCH request to /patients/ update to update patient info.
         """
 
-        if (request.GET.has_key("date")):
-            filter = {
-                    'date' : date
-            }
-            appointments = data_from_url(request,'https://drchrono.com/api/appointments',filter)
-            return JsonResponse({"response": appointments})
+        if (request.POST.has_key("patient_id")):
+            status_code = patch_patient(request)
+            return JsonResponse({"response": status_code})
         else:
             return JsonResponse({"status": "false"}, status=500)
 
-    # def post(self, request):
-    #     """
-    #         When patient checks in, we have to
-    #         send PATCH request to drchrono /appointments endpoint to update
-    #         its status.
-    #
-    #         The /appointments endpoint does not provide the time the patient
-    #         checked in. So when patient checks in, we also create a new appointment
-    #         in our DB so we can save the check-in time.
-    #     """
-    #     if (request.POST.has_key('appointment_id') and request.POST.has_key('scheduled_time')):
-    #         status_code = patch_appointment(request)
-    #         Appointment.objects.create_appointment(request)
-    #         return JsonResponse({"response": status_code})
-    #     else:
-    #         return JsonResponse({"status": "false"}, status=500)
+
+class AppointmentView(View):
+
+    def get(self, request):
+        if (request.GET.has_key("p_id")):
+            print("success")
+            now = datetime.now()
+            date = now.strftime('%Y-%m-%d')
+            test = data_from_url(request,'https://drchrono.com/api/appointments',{"date": date,"patient":request.GET.get('p_id')})[0]
+            print(test)
+            return JsonResponse(test)
+        else:
+            return JsonResponse({"status": "false"}, status=500)
+
+    def post(self, request):
+        if (request.POST.has_key('appointment_id') ):
+            print("inside view")
+            status_code = patch_appointment(request)
+            #Appointment.objects.create_appointment(request)
+            return JsonResponse({"response": status_code})
+        else:
+            return JsonResponse({"status": "false"}, status=500)
