@@ -8,7 +8,23 @@
         }
     ]);
     app.controller('doctorCtrl', ['$scope', '$http', function($scope, $http) {
-      $scope.mess = "pallavi"; 
+      $scope.datawaiting = true;
+      function init(){
+        $scope.mess = "pallavi";
+        $scope.appUrl = "/doctor/appointment/"
+        $http.get($scope.appUrl ).then(
+            function(response) {
+
+                $scope.appointments = response['data']['response'];
+                $scope.datawaiting = false;
+            })
+            .catch(function(response) {
+            console.error('Gists error', response.status, response.data);
+
+
+          });
+      }
+      init();
 
     }]);
 })();
