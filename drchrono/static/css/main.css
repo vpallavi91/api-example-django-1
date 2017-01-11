@@ -1,0 +1,54 @@
+html,body{
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Nunito-Regular';
+    background-image: url(../img/pattern.jpg)
+}
+/*FONT FACES*/
+
+
+@font-face {
+    font-family: 'Nunito-Regular';
+    src: local('Nunito-Regular.ttf'), url('Nunito-Regular.ttf') format('truetype');
+}
+
+
+.modal-header,.modal-footer{
+  text-align: center;
+}
+
+.modal-content{
+  background-color:rgba(255, 255, 255, 0.8);
+  margin: 30% auto;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.category1{
+  float:left;
+  background-color:rgb(44,62,80);
+  padding:4rem;
+  border-radius: 50%;
+  width:250px;
+  height: 250px;
+  font-size: 1.7rem;
+}
+.category2{
+  float:right;
+  background-color:rgb(44,62,80);
+  padding:4rem;
+  border-radius: 50%;
+  width:250px;
+  height: 250px;
+  font-size: 1.6rem;
+}
+
+#wrapper {
+    width: 45%;
+    padding-top: 10%;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+}

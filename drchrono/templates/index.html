@@ -1,9 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
-  <body>
-    <a href="{% url 'social:begin' 'drchrono' %}">
-      <button>Login</button>
-    </a>
 
-  </body>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <title> Welcome to drchrono! </title>
+</head>
+
+<body >
+
+  {% if username == '' %}
+  <div class="modal fade" id="createModal" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4>Please log in to continue!</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="{% url 'social:begin' 'drchrono' %}"><button class="btn btn-lg btn-success">Log in with Drchrono</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+      <!--<button class="btn btn-lg btn-outline-success"><a href="{% url 'social:begin' 'drchrono' %}">Learn More</a></button>-->
+  {% endif %}
+
+    <nav class="nav navbar-default"> <a class="navbar-brand" href='#'><i class="fa fa-user-md" aria-hidden="true"></i> theDOC <i class="fa fa-user-md" aria-hidden="true"></i></a>
+      {% if username != '' %}
+      <ul class="nav navbar-nav pull-right">
+        <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}">Logout</a> </li>
+      </ul>
+      {% endif %}
+    </nav>
+
+    <div id='wrapper' >
+    <a href='/kiosk/'><div class="category1">
+        Kiosk For</br>
+        Patients' CheckIn
+    </div></a>
+    <a href='/doctor/'><div class="category2" >
+      Information Display </br>
+      For Doctor
+    </div></a>
+</div>
+
+
+  <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
 </html>

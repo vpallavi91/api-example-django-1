@@ -39,9 +39,6 @@ def register_doc(request,doc_id):
     doc.doctor_id = doc_id
     doc.save()
 
-def login_as_staff(doc_id):
-    return check_if_registered_doc(doc_id)
-
 def login_as_doc(request,doc_id):
     check = check_if_registered_doc(doc_id)
     if check == True:
