@@ -53,7 +53,12 @@
 											$scope.paterr = false;
 											$scope.validationerror =false;
 	                    $scope.patient = response['data'];
-	                    $scope.id = $scope.patient['id'];
+	                    $scope.patientid = $scope.patient['id'];
+                      $scope.address = $scope.patient['address']
+                      $scope.cellphone = $scope.patient['cell_phone']
+                      $scope.email = $scope.patient['email']
+                      $scope.ssn = $scope.patient['social_security_number']
+                      $scope.zipcode = $scope.patient['zipcode']
 	                    $scope.patientData = true;
 	                })
 									.catch(function(response) {
@@ -72,7 +77,7 @@
             $scope.patientDataWaiting = false;
             $scope.patientData = false;
             getDatafromBackend("/kiosk/appointment/", {
-                    "p_id": $scope.id
+                    "p_id": $scope.patientid
                 },
                 function(response) {
                     $scope.appointment = response['data'];
@@ -94,6 +99,23 @@
 							alert("success");
 					});
 				};
+
+        $scope.patchpatient = function(){
+          alert("hello");
+          var url = "/kiosk/patient/";
+					var params = {'patient_id': $scope.patientid,
+								  'email': $scope.email,
+                    'address':$scope.address,
+                    'social_security_number':$scope.ssn,
+                    'zipcode':$scope.ssn,
+                    'cellphone':$scope.cellphone
+
+                    };
+
+					postDataToBackend(url, params, function () {
+							alert("success");
+					});
+        };
 
     }]);
 })();

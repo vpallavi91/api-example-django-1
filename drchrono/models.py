@@ -11,11 +11,8 @@ class Doctor(models.Model):
         return self.first_name + ' ' + self.last_name
 
 
-class Appointments(models.Model):
-    doctor = models.ForeignKey(Doctor, on_delete = models.CASCADE)
+class Appointment(models.Model):
     app_id = models.IntegerField()
-    Date_of_appointment = models.DateField()
     time_of_arrival = models.TimeField()
     start_time = models.TimeField()
-    end_time = models.TimeField()
     wait_time = models.DurationField()

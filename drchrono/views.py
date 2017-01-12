@@ -7,10 +7,9 @@ from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
 import datetime
 from datetime import datetime
-from utils import (
-    data_from_url,
-    login_as_doc
-    )
+from get_drchrono_data import data_from_url
+from utils import login_as_doc
+
 
 
 def login(request):
@@ -31,6 +30,7 @@ def login(request):
         for da in data:
             if da['username'] == user_name:
                 if da['is_doctor'] == True:
+                    request.session['doc_id'] = da['doctor']
                     login_as_doc(request,da['doctor'])
         return render_to_response('index.html',{'username':user_name})
 

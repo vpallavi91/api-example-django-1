@@ -2,8 +2,9 @@ from django.shortcuts import render,render_to_response
 from django.http import JsonResponse
 import requests
 from django.views.generic import View
-from drchrono.utils import data_from_url, patch_appointment
+from drchrono.get_drchrono_data import data_from_url
 from datetime import datetime
+from drchrono.post_drchrono_data import patch_appointment
 
 # Create your views here.
 def home(request):

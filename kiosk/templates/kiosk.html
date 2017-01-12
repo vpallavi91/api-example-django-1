@@ -42,12 +42,13 @@
   		<fieldset>
   			<h2 class="fs-title">Personal Details</h2>
   			<h3 class="fs-subtitle">Would you like to update anything?</h3>
-  			<input type="text" name="fname" placeholder="First Name" />
-  			<input type="text" name="lname" placeholder="Last Name" />
-  			<input type="text" name="phone" placeholder="Phone" />
-  			<textarea name="address" placeholder="Address"></textarea>
+  			<input type="text" name="fname" placeholder="Email" ng-model="email"/>
+  			<input type="text" name="lname" placeholder="SSN" ng-model="ssn"/>
+  			<input type="text" name="phone" placeholder="CellPhone" ng-model="cellphone"/>
+  			<textarea name="address" placeholder="Address" ng-model="address"></textarea>
+        <input type="text" name="phone" placeholder="Zipcode" ng-model="zipcode"/>
   			<input type="button" name="previous" class="previous action-button" value="Previous" />
-  			<input type="submit" name="submit" class="submit action-button" value="Submit" />
+  			<input type="button"  class=" action-button" value="Submit" ng-click="patchpatient()"/>
   		</fieldset>
   	</form>
 <script src="{% static 'js/angular.min.js' %}" type="text/javascript"></script>

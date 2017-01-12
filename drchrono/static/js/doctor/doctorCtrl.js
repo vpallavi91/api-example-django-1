@@ -25,6 +25,33 @@
           });
       }
       init();
+      function postDataToBackend(url, params, callback) {
+        $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+        var params = $.param(params);
+        alert(params);
+        $http.post(url, params)
+              .then(callback);
+      }
 
+      $scope.setAppointmenttoSession = function(appid) {
+        alert("inside post function");
+       var url = "/doctor/appointment/";
+       var params = {'appointment_id': appid,
+               'status': 'In Session'};
+
+       postDataToBackend(url, params, function () {
+           alert("success");
+       });
+     };
+     $scope.setAppointmenttoCompleted = function(appid) {
+       alert("inside post function");
+      var url = "/doctor/appointment/";
+      var params = {'appointment_id': appid,
+              'status': 'Complete'};
+
+      postDataToBackend(url, params, function () {
+          alert("success");
+      });
+    };
     }]);
 })();

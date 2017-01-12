@@ -2,20 +2,18 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import requests
 from django.views.generic import View
-from drchrono.utils import data_from_url, patch_appointment
+from drchrono.get_drchrono_data import data_from_url
 from datetime import datetime
+from drchrono.post_drchrono_data import patch_appointment,patch_patient
+from drchrono.utils import new_appointment
 # Create your views here.
 def home(request):
     return render(request,'kiosk.html')
 
 class PatientView(View):
-    """
-        Handles get and post request to our /doctor/patient endpoint.
-        Also then handles GET/POST requests to drchrono's /patients/ endpoint.
-    """
+
 
     def get(self, request):
-        """ Query drchrono /patients endpoint and return JSON of patient info """
 
         if (request.GET.has_key("f_name") and request.GET.has_key("l_name") and request.GET.has_key("dob")):
             filter = {
@@ -30,10 +28,6 @@ class PatientView(View):
             return JsonResponse({"status": "false"}, status=500)
 
     def post(self, request):
-        """
-            Responds to POST request to /doctor/patient endpoint by sending
-            PATCH request to /patients/ update to update patient info.
-        """
 
         if (request.POST.has_key("patient_id")):
             status_code = patch_patient(request)
@@ -59,7 +53,7 @@ class AppointmentView(View):
         if (request.POST.has_key('appointment_id') ):
             print("inside view")
             status_code = patch_appointment(request)
-            #Appointment.objects.create_appointment(request)
+            new_appointment(request.POST['appointment_id'])
             return JsonResponse({"response": status_code})
         else:
             return JsonResponse({"status": "false"}, status=500)
