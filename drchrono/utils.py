@@ -3,6 +3,10 @@ from models import Doctor,Appointment
 from get_drchrono_data import data_from_url
 from datetime import datetime
 
+'''
+HELPER FUNCTIONS FOR THE DOCTOR TO LOGIN
+ON FIRST USE, DOCTOR WILL BE REGISTERED WIT THE APP DB
+'''
 def check_if_registered_doc(doc_id):
     obj = Doctor.objects.filter(doctor_id = doc_id)
     return obj.exists()
@@ -26,7 +30,9 @@ def login_as_doc(request,doc_id):
         return True
     else:
         register_doc(request, doc_id)
-
+'''
+FUNCTION TO RECORD A NEW APPOINTMENT WHENEVER A PATIENT CHECKS IN
+'''
 def new_appointment(app_id,fname,lname):
     appointment = Appointment()
     now = datetime.now()
@@ -36,14 +42,14 @@ def new_appointment(app_id,fname,lname):
     appointment.last_name = lname
     appointment.save()
 
+'''
+FUNCTION TO RECORD THE TOTAL WAIT TIME OF EACH PATIENT
+'''
 def setWaitTime(request,app_id):
     appointment = Appointment.objects.get(app_id=app_id)
     now = datetime.now()
     appointment.start_time = now
-    print(str(now))
-    print(appointment.time_of_arrival)
     dur = getDuration(str(now),str(appointment.time_of_arrival))
-    print(dur)
     appointment.wait_time = dur
     doctor = Doctor.objects.get(doctor_id=int(request.session['doc_id']))
     doctor.total_wait_time = doctor.total_wait_time + dur
@@ -58,9 +64,6 @@ def getDuration(now,then):
     then_min = int(then[14:16])
     now_min = int(now[14:16])
     hr_diff = now_hr-then_hr
-    print(then_hr)
-    print(now_hr)
-    print(hr_diff)
     if (hr_diff == 0):
         min_final = now_min - then_min
     else:

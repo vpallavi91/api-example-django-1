@@ -4,7 +4,7 @@ from serializers import DoctorSerializer, AppointmentSerializer
 
 def doctor_detail(request):
     """
-    Retrieve, update or delete a code snippet.
+    Retrieve a doctor detail.
     """
     try:
         doctor = Doctor.objects.get(doctor_id=request.session['doc_id'])
@@ -16,6 +16,9 @@ def doctor_detail(request):
         return JsonResponse(serializer.data)
 
 def appointment_detail(request,app_id):
+    """
+    Retrieve an appointment detail.
+    """
     try:
         appointment = Appointment.objects.get(app_id=app_id)
     except Appointment.DoesNotExist:
@@ -26,6 +29,9 @@ def appointment_detail(request,app_id):
         return JsonResponse(serializer.data)
 
 def appointment_list(request):
+    """
+    Retrieve full appointment list.
+    """
     if request.method == 'GET':
         appointments = Appointment.objects.all()
         serializer = AppointmentSerializer(appointments, many=True)

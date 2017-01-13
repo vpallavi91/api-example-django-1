@@ -6,7 +6,6 @@ from django.contrib import admin
 import views
 
 urlpatterns = [
-    #url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.login,name = 'login'),
     url(r'^test/$', views.login,name = 'login'),

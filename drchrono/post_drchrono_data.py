@@ -2,7 +2,9 @@ import requests
 
 
 def patch_to_url(url, access_token, params={}):
-
+    '''
+    MAIN FUNCTION TO PATCH DATA TO DRCHRONO API
+    '''
     headers = {'Authorization': 'Bearer %s' % access_token,
                'Content-type': 'application/json',}
     print("inside patch_to_url")
@@ -21,7 +23,9 @@ def get_params(request, idk):
     return p
 
 def patch_appointment(request):
-
+    '''
+    HELPER FUNCTION TO PATCH APPOINTMENT DATA TO DRCHRONO API
+    '''
     access_token = request.session['access_token']
     appointment_id = request.POST['appointment_id']
     id_keys = []
@@ -36,6 +40,9 @@ def patch_appointment(request):
 
 
 def patch_patient(request):
+    '''
+    HELPER FUNCTION TO PATCH PATIENT DATA TO DRCHRONO API
+    '''
     access_token = request.session['access_token']
     patient_id = request.POST['patient_id']
     id_keys = []
