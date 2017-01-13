@@ -19,6 +19,9 @@
   							console.error('Gists error', response.status, response.data);
 								$scope.err = true;
 								$scope.patientDataWaiting = false;
+                $scope.time=""
+                $scope.duration=""
+                $scope.app_error=true
 
 							});
         }
@@ -81,6 +84,7 @@
                 },
                 function(response) {
                     $scope.appointment = response['data'];
+                    $scope.app_error=false
 										$scope.time1 = $scope.appointment['scheduled_time'];
 										$scope.time = $scope.time1.substring(11);
 										$scope.duration = $scope.appointment['duration'];
@@ -93,7 +97,10 @@
 					 alert("inside post function");
 					var url = "/kiosk/appointment/";
 					var params = {'appointment_id': $scope.appointment_id,
-								  'status': 'Arrived'};
+								  'status': 'Arrived',
+                  'first_name':$scope.first_name,
+                  'last_name':$scope.last_name
+                };
 
 					postDataToBackend(url, params, function () {
 							alert("success");

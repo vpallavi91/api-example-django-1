@@ -10,7 +10,7 @@
   		<ul id="progressbar">
   			<li class="active">Check-in Details</li>
   			<li>Confirm Appointment</li>
-  			<li>Change Demographics</li>
+  			<li>Update Demographics</li>
   		</ul>
   		<!-- fieldsets -->
   		<fieldset>
@@ -29,15 +29,18 @@
   			<h2 class="fs-title">Confirm Appointment</h2>
   			<h3 class="fs-subtitle">Is the one given below your scheduled appointment?</h3>
         {% verbatim %}
-          <div class="appConfirm">
+          <div class="appConfirm" ng-hide = "app_error">
             <ul>
               <li>Time: {{ time }}</li>
               <li>Duration: {{ duration }} minutes</li>
             </ul>
           </div>
+          <div ng-show='app_error'>
+            This Patient has no appointment today!
+          </div>
         {% endverbatim %}
   			<input type="button" name="previous" class="previous action-button" value="Previous" />
-  			<input type="button" name="next" class="next action-button" value="Next" ng-click="setAppointmenttoArrived()"/>
+  			<input type="button" name="next" class="next action-button"  value="Next" ng-click="setAppointmenttoArrived()"/>
   		</fieldset>
   		<fieldset>
   			<h2 class="fs-title">Personal Details</h2>
@@ -47,8 +50,9 @@
   			<input type="text" name="phone" placeholder="CellPhone" ng-model="cellphone"/>
   			<textarea name="address" placeholder="Address" ng-model="address"></textarea>
         <input type="text" name="phone" placeholder="Zipcode" ng-model="zipcode"/>
-  			<input type="button" name="previous" class="previous action-button" value="Previous" />
-  			<input type="button"  class=" action-button" value="Submit" ng-click="patchpatient()"/>
+  			<input type="button"  class="submit action-button" value="Update" ng-click="patchpatient()"/>
+        <a href = '{% url 'kiosk:home' %}'><input type="button" class=" action-button" value="Done!" /></a>
+
   		</fieldset>
   	</form>
 <script src="{% static 'js/angular.min.js' %}" type="text/javascript"></script>

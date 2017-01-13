@@ -1,3 +1,4 @@
-.neccessary{
-  border-color: blue;
+
+.nav > li > a:hover{
+    background-color:#18bc9c;
 }

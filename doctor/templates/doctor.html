@@ -12,23 +12,25 @@
 <body ng-controller='doctorCtrl' style="background-image: url({% static 'img/pattern.jpg' %})">
     <nav class="nav navbar-default"> <a class="navbar-brand" href='#'><i class="fa fa-user-md" aria-hidden="true"></i> theDOC <i class="fa fa-user-md" aria-hidden="true"></i></a> {% if username != '' %}
         <ul class="nav navbar-nav pull-right">
+          <li class="nav-item"> <a class="nav-link" href="{% url 'doctor:reports' %}">Reports</a> </li>
             <li class="nav-item"> <a class="nav-link" href="{% url 'logout' %}">Logout</a> </li>
         </ul>
         {% endif %}
     </nav>
     {% verbatim %}
+    <div class="well" style="background-color:#18bc9c;text-align:center;">
+
+    <h6>Average Waiting Time</h6><h3>{{ mins }} min {{ secs }} sec</h3>
+</div>
     <ul class="nav nav-tabs nav-justified" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Yet-to-Arrive</a>
+            <a class="nav-link active" data-toggle="tab" href="#home" role="tab" style="color:#2c3e50;font-size:2rem;">Yet-to-Arrive</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#arrived" role="tab">Arrived</a>
+            <a class="nav-link" data-toggle="tab" href="#arrived" role="tab" style="color:#2c3e50;font-size:2rem;">Arrived</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#insession" role="tab">In Session</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a>
+            <a class="nav-link" data-toggle="tab" href="#insession" role="tab" style="color:#2c3e50;font-size:2rem;">In Session</a>
         </li>
     </ul>
 
@@ -42,11 +44,13 @@
                 <div class="card text-center" style="background-color: #999; border-radius:0.5rem; padding: 1em;">
                     <div class="card-block">
                         <h2 class="card-title">{{app.scheduled_time|date:"h:mm a"}}</h2>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                            <p>status:{{app.status}}</p>
+                        <p class="card-text">
+                            Notes: {{app.notes}}<br/>
+                            Reason: {{app.reason}}<br/>
+                            Duration: {{app.duration}} mins<br/>
+                            status:{{app.status}}<br/>
                         </p>
 
-                        <a href="#" class="btn btn-primary btn-sm" ng-disabled="app.status=='Complete'">Go somewhere</a>
                     </div>
                 </div>
                 </br>
@@ -61,11 +65,15 @@
                 <div class="card text-center" style="background-color: #999; border-radius:0.5rem; padding: 1em;">
                     <div class="card-block">
                         <h2 class="card-title">{{app.scheduled_time|date:"h:mm a"}}</h2>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                            <p>status:{{app.status}}</p>
+                        <p class="card-text">
+                          Notes: {{app.notes}}<br/>
+                          Reason: {{app.reason}}<br/>
+                          Duration: {{app.duration}} mins<br/>
+                          status:{{app.status}}<br/>
+                          Waiting Time: {{app.time}} min
                         </p>
-
-                        <a href="#" class="btn btn-primary btn-sm" ng-click="setAppointmenttoSession(app.id)">Go somewhere</a>
+                        <a href="#" class="btn btn-primary btn-sm" ng-click="findDetails(app.id)">Details</a>
+                        <a href="#" class="btn btn-primary btn-sm" ng-click="setAppointmenttoSession(app.id)">Attend</a>
                     </div>
                 </div>
                 </br>
@@ -80,18 +88,20 @@
                 <div class="card text-center" style="background-color: #999; border-radius:0.5rem; padding: 1em;">
                     <div class="card-block">
                         <h2 class="card-title">{{app.scheduled_time|date:"h:mm a"}}</h2>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                            <p>status:{{app.status}}</p>
+                        <p class="card-text">
+                          Notes: {{app.notes}}<br/>
+                          Reason: {{app.reason}}<br/>
+                          Duration: {{app.duration}} mins<br/>
+                          status:{{app.status}}<br/>
                         </p>
 
-                        <a href="#" class="btn btn-primary btn-sm" ng-click="setAppointmenttoCompleted(app.id)">Go somewhere</a>
+                        <a href="#" class="btn btn-primary btn-sm" ng-click="setAppointmenttoCompleted(app.id)">Completed!</a>
                     </div>
                 </div>
                 </br>
                 </br>
             </div>
         </div>
-        <div class="tab-pane" id="settings" role="tabpanel">...sett</div>
     </div>
     {% endverbatim %}
 

@@ -52,8 +52,9 @@ class AppointmentView(View):
     def post(self, request):
         if (request.POST.has_key('appointment_id') ):
             print("inside view")
+            new_appointment(request.POST['appointment_id'],request.POST['first_name'],request.POST['last_name'])
             status_code = patch_appointment(request)
-            new_appointment(request.POST['appointment_id'])
+            #new_appointment(request.POST['appointment_id'])
             return JsonResponse({"response": status_code})
         else:
             return JsonResponse({"status": "false"}, status=500)

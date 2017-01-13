@@ -31,6 +31,7 @@ def login(request):
             if da['username'] == user_name:
                 if da['is_doctor'] == True:
                     request.session['doc_id'] = da['doctor']
+                    print(request.session['doc_id'])
                     login_as_doc(request,da['doctor'])
         return render_to_response('index.html',{'username':user_name})
 
